@@ -4,9 +4,12 @@ main: de.asedem.fileexplorer.FileExplorer
 api-version: '1.20'
 
 commands:
-  dir:
-    usage: /dir
-    description: Lists all files and folders in a directory
   cd:
     usage: /cd [name]
     description: Let you move between directories
+  dir:
+    usage: /dir
+    description: Lists all files and folders in a directory
+  pwd:
+    usage: /pwd
+    description: Shows you your current path

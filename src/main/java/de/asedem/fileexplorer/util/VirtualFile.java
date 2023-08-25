@@ -67,7 +67,6 @@ public class VirtualFile {
 
     @Nullable
     public File[] subFiles(@NotNull String deepPath) {
-        System.out.println(deepPath);
         final File[] files = Paths.get(this.getPath().toString(), deepPath).toFile().listFiles();
         if (files == null || files.length == 0) return null;
         return files;
