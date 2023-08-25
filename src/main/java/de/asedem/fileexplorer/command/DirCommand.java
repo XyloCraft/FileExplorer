@@ -1,9 +1,8 @@
 package de.asedem.fileexplorer.command;
 
 import de.asedem.fileexplorer.FileExplorer;
+import de.asedem.fileexplorer.util.CLICommand;
 import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,16 +11,14 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 
-public class DirCommand implements CommandExecutor {
-
-    private final FileExplorer plugin;
+public class DirCommand extends CLICommand {
 
     public DirCommand(@NotNull FileExplorer plugin) {
-        this.plugin = plugin;
+        super(plugin);
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
+    public void command(@NotNull CommandSender sender, @NotNull String[] args) {
         Optional.ofNullable(plugin.getFileManager().get(sender).subFiles())
                 .ifPresentOrElse(files -> Arrays.stream(files)
                                 .filter(Objects::nonNull)
@@ -31,7 +28,6 @@ public class DirCommand implements CommandExecutor {
                                 .forEach(sender::sendMessage),
                         () -> sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                                 "&cThe directory is empty!")));
-        return true;
     }
 
     private int compareFiles(@NotNull File file1, @NotNull File file2) {
