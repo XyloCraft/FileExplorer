@@ -1,5 +1,8 @@
 package de.asedem.fileexplorer.util;
 
+import de.asedem.fileexplorer.util.exception.FileCreationFailedException;
+import de.asedem.fileexplorer.util.exception.FileNotExistsException;
+import de.asedem.fileexplorer.util.exception.NotADirectoryException;
 import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -19,21 +22,21 @@ public class VirtualFile {
         this.clipboard = null;
     }
 
-    public void navigate(@NotNull Path path) {
+    public void navigate(@NotNull Path path) throws NotADirectoryException {
         if (path.toFile().exists() && path.toFile().isDirectory()) this.setPath(path);
+        else throw new NotADirectoryException();
     }
 
-    public void up(@NotNull String name) {
+    public void up(@NotNull String name) throws NotADirectoryException {
         this.navigate(Paths.get(this.getPath().toString(), name));
     }
 
-    public void down() {
+    public void down() throws NotADirectoryException {
         this.navigate(this.getPath().getParent());
     }
 
-    public void copy(@NotNull String name) {
-        final File file = Paths.get(this.getPath().toString(), name).toFile();
-        if (file.exists()) this.setClipboard(file);
+    public void copy(@NotNull String name) throws FileNotExistsException {
+        this.setClipboard(this.getFile(name));
     }
 
     public void paste() throws IOException {
@@ -43,14 +46,16 @@ public class VirtualFile {
         else FileUtils.copyFile(to, this.getClipboard());
     }
 
-    public void createFile(@NotNull String name) throws IOException {
+    public void createFile(@NotNull String name) throws IOException, FileCreationFailedException {
         final File file = Paths.get(this.getPath().toString(), name).toFile();
-        if (!file.exists()) file.createNewFile();
+        if (!file.exists() && (!file.createNewFile()))
+                throw new FileCreationFailedException();
     }
 
-    public void createDirectory(@NotNull String name) {
+    public void createDirectory(@NotNull String name) throws FileCreationFailedException {
         final File file = Paths.get(this.getPath().toString(), name).toFile();
-        if (!file.exists()) file.mkdirs();
+        if (!file.exists() && (!file.mkdirs()))
+                throw new FileCreationFailedException();
     }
 
     @Nullable
@@ -60,11 +65,11 @@ public class VirtualFile {
         return files;
     }
 
-    @Nullable
-    public File getFile(@NotNull String name) {
+    @NotNull
+    public File getFile(@NotNull String name) throws FileNotExistsException {
         final File file = Paths.get(this.getPath().toString(), name).toFile();
         if (file.exists() && file.isFile()) return file;
-        return null;
+        throw new FileNotExistsException();
     }
 
     @NotNull
