@@ -1,8 +1,11 @@
 package de.asedem.fileexplorer;
 
+import de.asedem.fileexplorer.command.DirCommand;
 import de.asedem.fileexplorer.manager.FileManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 public final class FileExplorer extends JavaPlugin {
 
@@ -12,6 +15,8 @@ public final class FileExplorer extends JavaPlugin {
     public void onEnable() {
         if (!this.getDataFolder().exists()) this.getDataFolder().mkdirs();
         this.fileManager = new FileManager(this.getDataFolder().toURI());
+
+        Objects.requireNonNull(this.getCommand("dir")).setExecutor(new DirCommand(this));
     }
 
     @Override
