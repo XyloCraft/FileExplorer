@@ -7,3 +7,6 @@ commands:
   dir:
     usage: /dir
     description: Lists all files and folders in a directory
+  cd:
+    usage: /cd [name]
+    description: Let you move between directories

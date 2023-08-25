@@ -23,7 +23,7 @@ public class VirtualFile {
     }
 
     public void navigate(@NotNull Path path) throws NotADirectoryException {
-        if (path.toFile().exists() && path.toFile().isDirectory()) this.setPath(path);
+        if (path.toFile().exists() && path.toFile().isDirectory()) this.setPath(path.normalize());
         else throw new NotADirectoryException();
     }
 
