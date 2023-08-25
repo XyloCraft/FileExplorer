@@ -1,0 +1,4 @@
+name: FileExplorer
+version: '${project.version}'
+main: de.asedem.fileexplorer.FileExplorer
+api-version: '1.20'
