@@ -4,11 +4,14 @@ import de.asedem.fileexplorer.FileExplorer;
 import de.asedem.fileexplorer.util.CLICommand;
 import de.asedem.fileexplorer.util.exception.NotADirectoryException;
 import org.bukkit.ChatColor;
-import org.bukkit.command.*;
+import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public class CdCommand extends CLICommand {

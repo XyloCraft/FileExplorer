@@ -49,13 +49,13 @@ public class VirtualFile {
     public void createFile(@NotNull String name) throws IOException, FileCreationFailedException {
         final File file = Paths.get(this.getPath().toString(), name).toFile();
         if (!file.exists() && (!file.createNewFile()))
-                throw new FileCreationFailedException();
+            throw new FileCreationFailedException();
     }
 
     public void createDirectory(@NotNull String name) throws FileCreationFailedException {
         final File file = Paths.get(this.getPath().toString(), name).toFile();
         if (!file.exists() && (!file.mkdirs()))
-                throw new FileCreationFailedException();
+            throw new FileCreationFailedException();
     }
 
     @Nullable
