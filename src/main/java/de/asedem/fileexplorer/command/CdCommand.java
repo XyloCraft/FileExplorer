@@ -8,10 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class CdCommand implements TabExecutor {
@@ -25,7 +22,7 @@ public class CdCommand implements TabExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
         if (args.length < 1) return true;
-        final String fileName = String.join(" ", args);
+        final String fileName = String.join(" ", args).replace("/ ", "/");
         try {
             this.plugin.getFileManager().get(sender).up(fileName);
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
@@ -41,11 +38,14 @@ public class CdCommand implements TabExecutor {
     @Nullable
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
-        return Stream.concat(Arrays.stream(Optional.ofNullable(this.plugin.getFileManager().get(sender).subFiles())
+        return Stream.concat(Arrays.stream(Optional.ofNullable(this.plugin.getFileManager()
+                                        .get(sender)
+                                        .subFiles(String.join("", args)))
                                 .orElse(new File[]{}))
                         .filter(Objects::nonNull)
                         .filter(File::isDirectory)
-                        .map(File::getName), Stream.of(".."))
+                        .map(File::getName)
+                        .map(string -> String.format("%s/", string)), Stream.of("../"))
                 .toList();
     }
 }

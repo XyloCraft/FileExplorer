@@ -65,6 +65,14 @@ public class VirtualFile {
         return files;
     }
 
+    @Nullable
+    public File[] subFiles(@NotNull String deepPath) {
+        System.out.println(deepPath);
+        final File[] files = Paths.get(this.getPath().toString(), deepPath).toFile().listFiles();
+        if (files == null || files.length == 0) return null;
+        return files;
+    }
+
     @NotNull
     public File getFile(@NotNull String name) throws FileNotExistsException {
         final File file = Paths.get(this.getPath().toString(), name).toFile();
