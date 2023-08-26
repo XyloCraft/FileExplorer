@@ -32,8 +32,8 @@ public class MkdirCommand extends CLICommand {
 
     private Stream<String> folderNames(String[] rawNames) {
         return Arrays.stream(String.join(" ", rawNames)
-                .replace("\\ ", "~")
-                .split(" "))
+                        .replace("\\ ", "~")
+                        .split(" "))
                 .map(name -> name.replace("~", " "));
     }
 }

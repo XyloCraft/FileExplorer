@@ -5,11 +5,11 @@ import org.jetbrains.annotations.NotNull;
 
 public record Config(
         @NotNull ModSupport modSupport
-        ) {
+) {
 
     public Config(@NotNull UTFConfig utfConfig) {
         this(
-            new ModSupport(utfConfig)
+                new ModSupport(utfConfig)
         );
     }
 }

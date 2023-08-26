@@ -4,9 +4,9 @@ import de.rytrox.spicy.config.UTFConfig;
 import org.jetbrains.annotations.NotNull;
 
 public record ModSupport(
-    boolean enabled,
-    boolean fileUpload,
-    boolean fileDownload
+        boolean enabled,
+        boolean fileUpload,
+        boolean fileDownload
 ) {
     public ModSupport(@NotNull UTFConfig utfConfig) {
         this(

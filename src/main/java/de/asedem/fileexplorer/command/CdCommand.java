@@ -4,7 +4,6 @@ import de.asedem.fileexplorer.FileExplorer;
 import de.asedem.fileexplorer.util.CLICommand;
 import de.asedem.fileexplorer.util.Pair;
 import de.asedem.fileexplorer.util.exception.NotADirectoryException;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
