@@ -4,12 +4,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
-public class FileNotExistsException extends Exception {
+public class CannotDeleteFileException extends Exception {
 
     private final File file;
 
-    public FileNotExistsException(@NotNull File file) {
-        super("A user tried to access a File, that not exists!");
+    public CannotDeleteFileException(@NotNull File file) {
+        super("File or Directory cannot be deleted!");
         this.file = file;
     }
 

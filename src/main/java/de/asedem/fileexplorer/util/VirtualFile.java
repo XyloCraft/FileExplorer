@@ -1,5 +1,6 @@
 package de.asedem.fileexplorer.util;
 
+import de.asedem.fileexplorer.util.exception.CannotDeleteFileException;
 import de.asedem.fileexplorer.util.exception.FileCreationFailedException;
 import de.asedem.fileexplorer.util.exception.FileNotExistsException;
 import de.asedem.fileexplorer.util.exception.NotADirectoryException;
@@ -46,18 +47,6 @@ public class VirtualFile {
         else FileUtils.copyFile(to, this.getClipboard());
     }
 
-    public void createFile(@NotNull String name) throws IOException, FileCreationFailedException {
-        final File file = Paths.get(this.getPath().toString(), name).toFile();
-        if (!file.exists() && (!file.createNewFile()))
-            throw new FileCreationFailedException();
-    }
-
-    public void createDirectory(@NotNull String name) throws FileCreationFailedException {
-        final File file = Paths.get(this.getPath().toString(), name).toFile();
-        if (!file.exists() && (!file.mkdirs()))
-            throw new FileCreationFailedException();
-    }
-
     @Nullable
     public File[] subFiles() {
         final File[] files = this.getPath().toFile().listFiles();
@@ -74,9 +63,42 @@ public class VirtualFile {
 
     @NotNull
     public File getFile(@NotNull String name) throws FileNotExistsException {
-        final File file = Paths.get(this.getPath().toString(), name).toFile();
+        final File file = Paths.get(this.getPath().toString(), name).normalize().toFile();
         if (file.exists() && file.isFile()) return file;
-        throw new FileNotExistsException();
+        throw new FileNotExistsException(file);
+    }
+
+    @NotNull
+    public File getDirectory(@NotNull String name) throws FileNotExistsException {
+        final File file = Paths.get(this.getPath().toString(), name).normalize().toFile();
+        if (file.exists() && file.isDirectory()) return file;
+        throw new FileNotExistsException(file);
+    }
+
+    public void createFile(@NotNull String name) throws IOException, FileCreationFailedException {
+        final File file = Paths.get(this.getPath().toString(), name).toFile();
+        if (!file.exists() && (!file.createNewFile()))
+            throw new FileCreationFailedException();
+    }
+
+    public void createDirectory(@NotNull String name) throws FileCreationFailedException {
+        final File file = Paths.get(this.getPath().toString(), name).toFile();
+        if (!file.exists() && (!file.mkdirs()))
+            throw new FileCreationFailedException();
+    }
+
+    @NotNull
+    public String deleteFile(@NotNull String name) throws CannotDeleteFileException, FileNotExistsException {
+        final File file = this.getFile(name);
+        if (!file.delete()) throw new CannotDeleteFileException(file);
+        return file.getName();
+    }
+
+    @NotNull
+    public String deleteDirectory(@NotNull String name) throws CannotDeleteFileException, FileNotExistsException {
+        final File file = this.getDirectory(name);
+        if (!file.delete()) throw new CannotDeleteFileException(file);
+        return file.getName();
     }
 
     @NotNull
@@ -89,11 +111,11 @@ public class VirtualFile {
     }
 
     @Nullable
-    public File getClipboard() {
+    private File getClipboard() {
         return clipboard;
     }
 
-    public void setClipboard(@Nullable File clipboard) {
+    private void setClipboard(@Nullable File clipboard) {
         this.clipboard = clipboard;
     }
 }
