@@ -2,6 +2,7 @@ package de.asedem.fileexplorer.command;
 
 import de.asedem.fileexplorer.FileExplorer;
 import de.asedem.fileexplorer.util.CLICommand;
+import de.asedem.fileexplorer.util.Pair;
 import de.asedem.fileexplorer.util.exception.NotADirectoryException;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -26,11 +27,10 @@ public class CdCommand extends CLICommand {
         final String fileName = String.join(" ", args).replace("/ ", "/");
         try {
             this.plugin.getFileManager().get(sender).up(fileName);
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                    String.format("&aSuccessfully moved to %s", this.plugin.getFileManager().get(sender).getPath().toFile().getName())));
+            this.plugin.language().send(sender, "cli.cd.success", Pair.of("name",
+                    this.plugin.getFileManager().get(sender).getPath().toFile().getName()));
         } catch (NotADirectoryException exception) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                    String.format("&c%s: No such file or directory", fileName)));
+            this.plugin.language().send(sender, "cli.cd.not-found", Pair.of("name", fileName));
             this.plugin.getLogger().warning(exception.getLocalizedMessage());
         }
     }

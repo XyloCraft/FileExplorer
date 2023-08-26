@@ -14,10 +14,11 @@ public class Language {
         this.configuration = configuration;
     }
 
-    public void send(@NotNull CommandSender sender, @NotNull String key, @NotNull Pair<String, String>... replacements) {
+    @SafeVarargs
+    public final void send(@NotNull CommandSender sender, @NotNull String key, @NotNull Pair<String, String>... replacements) {
         String message = this.configuration.getString(key, "");
         for (Pair<String, String> replacement : replacements)
-            message = message.replace(replacement.getKey(), replacement.getValue());
+            message = message.replace(String.format("{%s}", replacement.getKey()), replacement.getValue());
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
     }
 }

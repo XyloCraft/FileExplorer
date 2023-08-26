@@ -9,8 +9,8 @@ cli:
     occupied: "&cCannot remove {name}: File is occupied"
     not-found: "&cCannot remove {name}: No such file"
   dir:
-    file-symbol: "&a▤"
-    directory-symbol: "&d▥"
+    file: "&a▤ {name}"
+    directory: "&d▥ {name}"
     empty: "&cThe directory is empty!"
   pwd:
     message: "{path}"
