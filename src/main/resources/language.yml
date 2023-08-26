@@ -1,0 +1,19 @@
+no-permission: "&cYou have no permission to perform that command!"
+
+cli:
+  cd:
+    success: "&aSuccessfully moved to {name}"
+    not-found: "&c{name}: No such file or directory"
+  rm:
+    success: "&aSuccessfully removed {name}"
+    occupied: "&cCannot remove {name}: File is occupied"
+    not-found: "&cCannot remove {name}: No such file"
+  dir:
+    file-symbol: "&a▤"
+    directory-symbol: "&d▥"
+    empty: "&cThe directory is empty!"
+  pwd:
+    message: "{path}"
+  mkdir:
+    success: "&aDirectory {name} successfully created"
+    failed: "&cCannot create Directory {name}"

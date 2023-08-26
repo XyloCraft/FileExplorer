@@ -1,0 +1,4 @@
+mod-support:
+  enabled: false
+  file-upload: true
+  file-download: true
