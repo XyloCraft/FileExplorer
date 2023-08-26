@@ -2,8 +2,8 @@ package de.asedem.fileexplorer.command;
 
 import de.asedem.fileexplorer.FileExplorer;
 import de.asedem.fileexplorer.util.CLICommand;
+import de.asedem.fileexplorer.util.Pair;
 import de.asedem.fileexplorer.util.exception.FileCreationFailedException;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
@@ -22,11 +22,9 @@ public class MkdirCommand extends CLICommand {
                 .forEach(name -> {
                     try {
                         this.plugin.getFileManager().get(sender).createDirectory(name);
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                                String.format("&aDirectory \"%s\" successfully created", name)));
+                        this.plugin.language().send(sender, "cli.mkdir.success", Pair.of("name", name));
                     } catch (FileCreationFailedException exception) {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                                String.format("&cCannot create Directory \"%s\"", name)));
+                        this.plugin.language().send(sender, "cli.mkdir.failed", Pair.of("name", name));
                         this.plugin.getLogger().warning(exception.getLocalizedMessage());
                     }
                 });

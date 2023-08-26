@@ -2,9 +2,9 @@ package de.asedem.fileexplorer.command;
 
 import de.asedem.fileexplorer.FileExplorer;
 import de.asedem.fileexplorer.util.CLICommand;
+import de.asedem.fileexplorer.util.Pair;
 import de.asedem.fileexplorer.util.exception.CannotDeleteFileException;
 import de.asedem.fileexplorer.util.exception.FileNotExistsException;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,16 +26,13 @@ public class RmCommand extends CLICommand {
         if (args.length < 1) return;
         final String fileName = String.join(" ", args).replace("/ ", "/");
         try {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                    String.format("&aSuccessfully removed %s",
-                            this.plugin.getFileManager().get(sender).deleteFile(fileName))));
+            this.plugin.language().send(sender, "cli.rm.success", Pair.of("name",
+                    this.plugin.getFileManager().get(sender).deleteFile(fileName)));
         } catch (CannotDeleteFileException exception) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                    String.format("&cCannot remove %s: File is occupied", exception.getFile().getName())));
+            this.plugin.language().send(sender, "cli.rm.occupied", Pair.of("name", exception.getFile().getName()));
             this.plugin.getLogger().warning(exception.getLocalizedMessage());
         } catch (FileNotExistsException exception) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                    String.format("&cCannot remove %s: No such file", exception.getFile().getName())));
+            this.plugin.language().send(sender, "cli.rm.not-found", Pair.of("name", exception.getFile().getName()));
             this.plugin.getLogger().warning(exception.getLocalizedMessage());
         }
     }
