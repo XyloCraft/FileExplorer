@@ -13,3 +13,6 @@ commands:
   pwd:
     usage: /pwd
     description: Shows you your current path
+  mkdir:
+    usage: /mkdir [folder names]
+    description: Create Folders in your current directory

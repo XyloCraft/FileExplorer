@@ -22,15 +22,12 @@ public class FileManager {
 
     @NotNull
     public VirtualFile get(@NotNull UUID uuid) {
-        if (!this.fileMap.containsKey(uuid)) this.fileMap.put(uuid, new VirtualFile(Paths.get(this.defaultURI)));
-        return this.fileMap.getOrDefault(uuid, new VirtualFile(Paths.get(this.defaultURI)));
+        return this.fileMap.computeIfAbsent(uuid, temp -> new VirtualFile(Paths.get(this.defaultURI)));
     }
 
     @NotNull
     public VirtualFile get(@NotNull CommandSender sender) {
-        final UUID uuid = sender instanceof Player player ? player.getUniqueId() : new UUID(0, 0);
-        if (!this.fileMap.containsKey(uuid)) this.fileMap.put(uuid, new VirtualFile(Paths.get(this.defaultURI)));
-        return this.fileMap.getOrDefault(uuid, new VirtualFile(Paths.get(this.defaultURI)));
+        return this.get(sender instanceof Player player ? player.getUniqueId() : new UUID(0, 0));
     }
 
     public void reset(@NotNull UUID uuid) {
