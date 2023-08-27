@@ -17,3 +17,5 @@ cli:
   mkdir:
     success: "&aDirectory {name} successfully created"
     failed: "&cCannot create Directory {name}"
+  reset:
+    success: "&aYour directory and clipboard are reset!"

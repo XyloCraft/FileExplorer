@@ -19,3 +19,6 @@ commands:
   mkdir:
     usage: /mkdir [folder names]
     description: Create Folders in your current directory
+  reset:
+    usage: /reset
+    description: Resets your current directory and clears you clipboard

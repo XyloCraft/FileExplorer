@@ -33,4 +33,8 @@ public class FileManager {
     public void reset(@NotNull UUID uuid) {
         this.fileMap.remove(uuid);
     }
+
+    public void reset(@NotNull CommandSender sender) {
+        this.reset(sender instanceof Player player ? player.getUniqueId() : new UUID(0, 0));
+    }
 }

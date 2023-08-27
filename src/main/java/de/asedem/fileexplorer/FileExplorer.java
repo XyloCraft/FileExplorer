@@ -34,6 +34,7 @@ public final class FileExplorer extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("dir")).setExecutor(new DirCommand(this));
         Objects.requireNonNull(this.getCommand("pwd")).setExecutor(new PwdCommand(this));
         Objects.requireNonNull(this.getCommand("mkdir")).setExecutor(new MkdirCommand(this));
+        Objects.requireNonNull(this.getCommand("reset")).setExecutor(new ResetCommand(this));
     }
 
     @Override
