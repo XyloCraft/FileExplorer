@@ -24,7 +24,7 @@ public class MkdirCommand extends CLICommand {
                         this.plugin.getFileManager().get(sender).createDirectory(name);
                         this.plugin.language().send(sender, "cli.mkdir.success", Pair.of("name", name));
                     } catch (FileCreationFailedException exception) {
-                        this.plugin.language().send(sender, "cli.mkdir.failed", Pair.of("name", name));
+                        this.plugin.language().send(sender, "cli.mkdir.failed", Pair.of("name", exception.getFile().getName()));
                         this.plugin.getLogger().warning(exception.getLocalizedMessage());
                     }
                 });

@@ -23,13 +23,16 @@ public class CdCommand extends CLICommand {
     @Override
     public void command(@NotNull CommandSender sender, @NotNull String[] args) {
         if (args.length < 1) return;
-        final String fileName = String.join(" ", args).replace("/ ", "/");
         try {
-            this.plugin.getFileManager().get(sender).up(fileName);
+            this.plugin.getFileManager()
+                    .get(sender)
+                    .up(String
+                            .join(" ", args)
+                            .replace("/ ", "/"));
             this.plugin.language().send(sender, "cli.cd.success", Pair.of("name",
                     this.plugin.getFileManager().get(sender).getPath().toFile().getName()));
         } catch (NotADirectoryException exception) {
-            this.plugin.language().send(sender, "cli.cd.not-found", Pair.of("name", fileName));
+            this.plugin.language().send(sender, "cli.cd.not-found", Pair.of("name", exception.getFile().getName()));
             this.plugin.getLogger().warning(exception.getLocalizedMessage());
         }
     }

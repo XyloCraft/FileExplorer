@@ -4,17 +4,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
-public class FileNotExistsException extends Exception {
+public class FileNotExistsException extends FileException {
 
-    private final File file;
 
     public FileNotExistsException(@NotNull File file) {
-        super("A user tried to access a File, that not exists!");
-        this.file = file;
-    }
-
-    @NotNull
-    public File getFile() {
-        return file;
+        super("A user tried to access a File, that not exists!", file);
     }
 }

@@ -1,8 +1,12 @@
 package de.asedem.fileexplorer.util.exception;
 
-public class FileCreationFailedException extends Exception {
+import org.jetbrains.annotations.NotNull;
 
-    public FileCreationFailedException() {
-        super("A user tried create a File. This action can't be executed!");
+import java.io.File;
+
+public class FileCreationFailedException extends FileException {
+
+    public FileCreationFailedException(@NotNull File file) {
+        super("A user tried create a File. This action can't be executed!", file);
     }
 }

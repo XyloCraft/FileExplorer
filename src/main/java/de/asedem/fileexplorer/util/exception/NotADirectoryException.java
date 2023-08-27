@@ -1,8 +1,12 @@
 package de.asedem.fileexplorer.util.exception;
 
-public class NotADirectoryException extends Exception {
+import org.jetbrains.annotations.NotNull;
 
-    public NotADirectoryException() {
-        super("A user tried to navigate into a file, that is not a Directory!");
+import java.io.File;
+
+public class NotADirectoryException extends FileException {
+
+    public NotADirectoryException(@NotNull File file) {
+        super("A user tried to navigate into a file, that is not a Directory!", file);
     }
 }

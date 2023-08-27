@@ -25,7 +25,7 @@ public class VirtualFile {
 
     public void navigate(@NotNull Path path) throws NotADirectoryException {
         if (path.toFile().exists() && path.toFile().isDirectory()) this.setPath(path.normalize());
-        else throw new NotADirectoryException();
+        else throw new NotADirectoryException(path.toFile());
     }
 
     public void up(@NotNull String name) throws NotADirectoryException {
@@ -78,13 +78,13 @@ public class VirtualFile {
     public void createFile(@NotNull String name) throws IOException, FileCreationFailedException {
         final File file = Paths.get(this.getPath().toString(), name).toFile();
         if (!file.exists() && (!file.createNewFile()))
-            throw new FileCreationFailedException();
+            throw new FileCreationFailedException(file);
     }
 
     public void createDirectory(@NotNull String name) throws FileCreationFailedException {
         final File file = Paths.get(this.getPath().toString(), name).toFile();
         if (!file.exists() && (!file.mkdirs()))
-            throw new FileCreationFailedException();
+            throw new FileCreationFailedException(file);
     }
 
     @NotNull
