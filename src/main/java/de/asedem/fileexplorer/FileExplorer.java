@@ -29,8 +29,6 @@ public final class FileExplorer extends JavaPlugin {
 
         this.reloadConfig();
 
-        System.out.println(this.config().modSupport().enabled());
-
         Objects.requireNonNull(this.getCommand("cd")).setExecutor(new CdCommand(this));
         Objects.requireNonNull(this.getCommand("rm")).setExecutor(new RmCommand(this));
         Objects.requireNonNull(this.getCommand("dir")).setExecutor(new DirCommand(this));
