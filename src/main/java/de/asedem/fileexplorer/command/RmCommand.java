@@ -42,7 +42,9 @@ public class RmCommand extends CLICommand {
     public List<String> tabComplete(@NotNull CommandSender sender, @NotNull String[] args) {
         return Stream.concat(Arrays.stream(Optional.ofNullable(this.plugin.getFileManager()
                                         .get(sender)
-                                        .subFiles(String.join("", args)))
+                                        .subFiles(String.join("", args)
+                                                .replace("/ ", "/")
+                                                .replace("\\ ", " ")))
                                 .orElse(new File[]{}))
                         .filter(Objects::nonNull)
                         .map(File::getName)
